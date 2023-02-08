@@ -1,8 +1,8 @@
 ## 一个超级简单的腾讯云SDK
 
-这是精简到7KB的一个腾讯云SDK，虽然短小，但却精悍，他几乎支持所有腾讯云的API v3，而且它同时支持GET和POST请求
+这是一个精简到只有7KB的腾讯云SDK，虽然短小，但却精悍，他几乎支持所有腾讯云的API v3，而且它同时支持GET和POST请求
 
-### 你该如果使用它
+### 你该如何使用它
 
 它只有一个文件，你可以直接使用require引入到你的php代码中。
 
@@ -24,16 +24,18 @@ $txCloud = new TencentCloud($SecretId, $SecretKey);
 ```php
 //这里我们定义一个变量，用来存放API接口的地址，必须是https://或者http://开头
 $url = "https://nlp.tencentcloudapi.com";
+```
 
-//接下来我们需要继续查阅API文档，以设置必要的请求参数
+接下来我们需要继续查阅API文档，以设置必要的请求参数
 
+```php
 //这里我们定义一个数组，存放的是公共参数
 $common["Version"] ='2019-04-08';        //Version   是    本接口取值：2019-04-08。
 $common["Region"]  = 'ap-guangzhou';     //Region    是    地域列表。
 //$header["Timestamp"] = time();         //Timestamp 是    当前 UNIX 时间戳，鄙人的SDK会在计算签名时添加。
 $common["Action"] = 'ChatBot';           //Action    是    本接口取值：ChatBot。
 
-//这里我们定义一个数组，存放的是公共参数
+//这里我们定义一个数组，存放的是接口参数
 $param["Query"] = "你好";                //Query     是    用户请求的query
 //["OpenId"]                             //OpenId    否    服务的id, 主要用于儿童闲聊接口，比如手Q的openid。
 //["Flag"]                               //Flag      否    0: 通用闲聊, 1:儿童闲聊, 默认是通用闲聊
@@ -74,7 +76,7 @@ curl -X POST https://nlp.tencentcloudapi.com \
 //我们可以用SendGet发送一个GET请求
 $complete = $txCloud->SendGet($url, $common, $param);
 
-//返回最近一次请求的curl命令
+//最近一次请求的curl命令
 $curl = $txCloud->CurlCmd;
 
 echo("GET:\n\n$complete\n\n$curl\n\n");

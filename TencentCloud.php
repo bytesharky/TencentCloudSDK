@@ -86,7 +86,7 @@ class TencentCloud
         ($post?"":http_build_query($param,null,null,PHP_QUERY_RFC3986))."\n".
         $keystr['arr']."\n".
         $keystr['key']."\n".
-        hash('sha256',($post?json_encode($param):""));
+        hash('sha256',($post?(empty($param)?"{}":json_encode($param)):""));
 
         //Step2
         $Algorithm = "TC3-HMAC-SHA256";
@@ -139,12 +139,15 @@ class TencentCloud
         
 
         //处理请求数据
-        if(!empty($data)){
-            if (!$IsPost)
-                $url = $url."?".(is_array($data)?http_build_query($data):$data);
-            else
-                $data = is_array($data)?json_encode($data):$data;
-        }
+		if (!$IsPost){
+			if(!empty($data))
+				$url = $url."?".(is_array($data)?http_build_query($data):$data);
+		}else{
+			if(!empty($data))
+				$data = is_array($data)?json_encode($data):$data;
+			else
+				$data = "{}";
+		}
 
         //curl请求命令
         $curlcmd = "curl -X ".($IsPost?"POST":"GET")." $url \\\n";

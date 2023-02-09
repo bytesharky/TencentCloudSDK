@@ -66,7 +66,7 @@ curl -X POST https://nlp.tencentcloudapi.com \
 -H "X-TC-Region: ap-guangzhou" \
 -H "X-TC-Timestamp: 1675888731" \
 -H "X-TC-Version: 2019-04-08" \
--H "Authorization: TC3-HMAC-SHA256 Credential=AKIDLcq19D5i9NPH1Xoz0pSr43rfLvJUSDtc/2023-02-08/nlp/tc3_request, SignedHeaders=content-type;host, Signature=dbf5247183f99c1dec0c3991d2698c4634fd08a1a7bbfe8c5e117c5dc1d286a4" \
+-H "Authorization: TC3-HMAC-SHA256 Credential=*****/2023-02-08/nlp/tc3_request, SignedHeaders=content-type;host, Signature=dbf5247183f99c1dec0c3991d2698c4634fd08a1a7bbfe8c5e117c5dc1d286a4" \
 -d '{"Query":"\u4f60\u597d"}'
 ```
 
@@ -91,7 +91,7 @@ curl -X GET https://nlp.tencentcloudapi.com?Query=%E4%BD%A0%E5%A5%BD \
 -H "X-TC-Region: ap-guangzhou" \
 -H "X-TC-Timestamp: 1675888731" \
 -H "X-TC-Version: 2019-04-08" \
--H "Authorization: TC3-HMAC-SHA256 Credential=AKIDLcq19D5i9NPH1Xoz0pSr43rfLvJUSDtc/2023-02-08/nlp/tc3_request, SignedHeaders=content-type;host, Signature=dc451ec5bf24566848673db955aaa672d111851133b17246f318ceaffa44d652" \
+-H "Authorization: TC3-HMAC-SHA256 Credential=*****/2023-02-08/nlp/tc3_request, SignedHeaders=content-type;host, Signature=dc451ec5bf24566848673db955aaa672d111851133b17246f318ceaffa44d652" \
 ```
 
 最后总结一下：

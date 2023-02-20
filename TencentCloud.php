@@ -139,15 +139,15 @@ class TencentCloud
         
 
         //处理请求数据
-		if (!$IsPost){
-			if(!empty($data))
-				$url = $url."?".(is_array($data)?http_build_query($data):$data);
-		}else{
-			if(!empty($data))
-				$data = is_array($data)?json_encode($data):$data;
-			else
-				$data = "{}";
-		}
+        if (!$IsPost){
+            if(!empty($data))
+                $url = $url."?".(is_array($data)?http_build_query($data):$data);
+            }else{
+                if(!empty($data))
+                    $data = is_array($data)?json_encode($data):$data;
+                else
+                    $data = "{}";
+        }
 
         //curl请求命令
         $curlcmd = "curl -X ".($IsPost?"POST":"GET")." $url \\\n";
@@ -159,15 +159,15 @@ class TencentCloud
             $curlcmd .= "-d "."'$data'\n";
 
         $http = curl_init ($url);                                        //初始化一个CUR类
-        curl_setopt($http, CURLOPT_SSL_VERIFYPEER, false);               //是否验证证书由CA颁发
+        curl_setopt($http, CURLOPT_SSL_VERIFYPEER, false);               //是否验证证书由授信CA颁发
         curl_setopt($http, CURLOPT_SSL_VERIFYHOST, false);               //是否验证域名与证书一致
         curl_setopt($http, CURLOPT_ENCODING, 'UTF-8');                   //解析压缩格式
         curl_setopt($http, CURLOPT_HTTPHEADER, $headers);                //构造请求头
         curl_setopt($http, CURLOPT_POST, $IsPost);                       //是POST或GET
         curl_setopt($http, CURLOPT_HEADER, 1);                           //取得http头
         curl_setopt($http, CURLOPT_RETURNTRANSFER, 1);                   //结果保存到变量
-        curl_setopt($http, CURLOPT_CONNECTTIMEOUT,$this->timeout);       //连接前5秒未响应超时
-        curl_setopt($http, CURLOPT_TIMEOUT,$this->timeout);              //连接在5秒后超时
+        curl_setopt($http, CURLOPT_CONNECTTIMEOUT,$this->timeout);       //连接前N秒未响应超时
+        curl_setopt($http, CURLOPT_TIMEOUT,$this->timeout);              //连接在N秒后超时
         
         if ($IsPost)
             curl_setopt($http, CURLOPT_POSTFIELDS, $data);               //发送的数据
@@ -179,9 +179,9 @@ class TencentCloud
             curl_close ($http);                                          //关闭CURL连接资源
             return array('state'=> $error, 'curl'=>$curlcmd);
         }else{
-            $hSize = curl_getinfo($http, CURLINFO_HEADER_SIZE);          //取得返回头大小
-            $headers = substr($Response, 0, $hSize);                     //取出返回包头
-            $Body = substr($Response, $hSize);                           //取出返回包体
+            $hSize = curl_getinfo($http, CURLINFO_HEADER_SIZE);          //取得响应头大小
+            $headers = substr($Response, 0, $hSize);                     //取出 Header
+            $Body = substr($Response, $hSize);                           //取出 Body
             curl_close ($http);                                          //关闭CURL连接资源
             return array('state'=>'success','header'=>$headers,'body'=>$Body, 'curl'=>$curlcmd) ;
         }

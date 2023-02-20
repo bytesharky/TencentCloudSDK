@@ -150,12 +150,12 @@ class TencentCloud
         }
 
         //curl请求命令
-        $curlcmd = "curl -X $method $url \\\n";
+        $curlcmd = "curl -X ".($IsPost?"POST":"GET")." $url \\\n";
         foreach($headers as $k=>$v)
         {
             $curlcmd .= "-H \"$v\" \\\n";
         }
-        if($method != "GET")
+        if($IsPost)
             $curlcmd .= "-d "."'$data'\n";
 
         $http = curl_init ($url);                                        //初始化一个CUR类

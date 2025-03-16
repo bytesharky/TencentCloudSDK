@@ -83,7 +83,7 @@ class TencentCloud
         //Step1
         $CanonicalRequest =
         ($post?"POST":"GET")."\n/\n".
-        ($post?"":http_build_query($param,null,null,PHP_QUERY_RFC3986))."\n".
+        ($post?"":http_build_query($param,'',null,PHP_QUERY_RFC3986))."\n".
         $keystr['arr']."\n".
         $keystr['key']."\n".
         hash('sha256',($post?(empty($param)?"{}":json_encode($param)):""));
@@ -158,7 +158,7 @@ class TencentCloud
         if($IsPost)
             $curlcmd .= "-d "."'$data'\n";
 
-        $http = curl_init ($url);                                        //初始化一个CUR类
+        $http = curl_init ($url);                                                          //初始化一个CUR类
         curl_setopt($http, CURLOPT_SSL_VERIFYPEER, false);               //是否验证证书由授信CA颁发
         curl_setopt($http, CURLOPT_SSL_VERIFYHOST, false);               //是否验证域名与证书一致
         curl_setopt($http, CURLOPT_ENCODING, 'UTF-8');                   //解析压缩格式
@@ -172,17 +172,17 @@ class TencentCloud
         if ($IsPost)
             curl_setopt($http, CURLOPT_POSTFIELDS, $data);               //发送的数据
 
-        $Response = curl_exec ($http);                                   //执行并取得返回值
+        $Response = curl_exec ($http);                                                  //执行并取得返回值
         
         if (curl_errno($http)>0){
             $error = curl_error($http);
-            curl_close ($http);                                          //关闭CURL连接资源
+            curl_close ($http);                                                          //关闭CURL连接资源
             return array('state'=> $error, 'curl'=>$curlcmd);
         }else{
-            $hSize = curl_getinfo($http, CURLINFO_HEADER_SIZE);          //取得响应头大小
+            $hSize = curl_getinfo($http, CURLINFO_HEADER_SIZE);                  //取得响应头大小
             $headers = substr($Response, 0, $hSize);                     //取出 Header
-            $Body = substr($Response, $hSize);                           //取出 Body
-            curl_close ($http);                                          //关闭CURL连接资源
+            $Body = substr($Response, $hSize);                                   //取出 Body
+            curl_close ($http);                                                          //关闭CURL连接资源
             return array('state'=>'success','header'=>$headers,'body'=>$Body, 'curl'=>$curlcmd) ;
         }
     }

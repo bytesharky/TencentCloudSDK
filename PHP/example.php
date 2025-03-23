@@ -26,7 +26,7 @@ $param["Query"] = "你好";                //Query     是    String    用户�
 $complete = $txCloud->SendPost($url, $common, $param);
 
 //返回最近一次请求的curl命令
-$curl = $txCloud->CurlCmd;
+$curl = $txCloud->lastCurl();
 
 echo("POST:\n\n$complete\n\n$curl\n\n");
 
@@ -34,7 +34,7 @@ echo("POST:\n\n$complete\n\n$curl\n\n");
 $complete = $txCloud->SendGet($url, $common, $param);
 
 //返回最近一次请求的curl命令
-$curl = $txCloud->CurlCmd;
+$curl = $txCloud->lastCurl();
 
 echo("GET:\n\n$complete\n\n$curl\n\n");
 ?>

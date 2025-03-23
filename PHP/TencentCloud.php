@@ -5,13 +5,15 @@ class TencentCloud
 
     private $SecretId;
     private $SecretKey;
-    private $timeout = 10;
-    public $CurlCmd = "";
+    private $timeout;
+    private $CurlCmd = "";
 
-    public function __construct($SecretId, $SecretKey)
+    public function __construct($SecretId, $SecretKey, $timeout = 10)
     {
         $this->SecretId = $SecretId;
         $this->SecretKey = $SecretKey;
+        $this->timeout = $timeout;
+        $this->CurlCmd = "";
     }
 
     public function SendGet($url, $common, $param){
@@ -38,6 +40,10 @@ class TencentCloud
             return $complete["body"];
         }
         return '{"state":"network error"}';
+    }
+
+    public function lastCurl(){
+        return $this->CurlCmd;
     }
 
     private function Build($url, $common, $param, $post){

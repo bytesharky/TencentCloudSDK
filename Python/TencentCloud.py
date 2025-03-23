@@ -23,6 +23,9 @@ class TencentCloud:
         build = self.build(url, common, param, True)
         return self.send_http(build["url"], build["headers"], build["param"], True)
 
+    def lastCurl(self):
+        return self.curl_cmd
+
     def build(self, url, common, param, is_post):
 
         if not url.startswith("http://") and not url.startswith("https://"):
@@ -81,21 +84,17 @@ class TencentCloud:
             if (is_post):
                 json_data = json.dumps(data, separators=(',', ':'))
                 response = requests.post(url, headers=headers, data=json_data, timeout=self.timeout)
-                print('----------------------------------------')
-                print(self.requests_to_curl(url, 'POST', headers, data, self.timeout))
-                print('----------------------------------------')
+                self.curl_cmd = self.requests_to_curl(url, 'POST', headers, data, self.timeout)
             else:
                 response = requests.get(url, headers=headers, params=data, timeout=self.timeout)
-                print('----------------------------------------')
-                print(self.requests_to_curl(url, 'GET', headers, data, self.timeout))
-                print('----------------------------------------')
+                self.curl_cmd = self.requests_to_curl(url, 'GET', headers, data, self.timeout)
+
 
             response.raise_for_status()
             return response.text
         except requests.exceptions.RequestException as e:
             return json.dumps({"state": "network error", "error": str(e)})
         
-
     def requests_to_curl(self, url, method, headers=None, data=None, timeout=None):
         # 构建基本的 curl 命令
         curl_command = f"curl -X {method} {url} \\\n"

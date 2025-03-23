@@ -23,3 +23,7 @@ param = {
 response = tencentapi.send_post(url, common, param)
 
 print(response)
+
+print('----------------------------------------')
+print(tencentapi.lastCurl())
+print('----------------------------------------')
